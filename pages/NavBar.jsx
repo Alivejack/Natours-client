@@ -2,7 +2,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { House, Menu, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Settings, Briefcase, Star, CreditCard } from 'lucide-react';
+import { Settings, Briefcase, Star, CreditCard, Map, Users } from 'lucide-react';
 
 const NavBar = () => {
   const { user, loading, logout } = useAuth();
@@ -76,9 +76,7 @@ const NavBar = () => {
                   className="w-10 h-10 rounded-full object-cover"
                   alt="ProfilePic"
                 />
-                <p className=" text-white uppercase select-none">
-                  {user.name.split(' ')[0]}
-                </p>
+                <p className=" text-white uppercase select-none">{user.name.split(' ')[0]}</p>
               </Link>
               <button
                 onClick={handleLogout}
@@ -116,6 +114,17 @@ const NavBar = () => {
             {li(Star, 'MY REVIEWS', '/me/reviews')}
             {li(CreditCard, 'BILLING', '/me/billing')}
           </ul>
+          {user?.role === 'admin' && (
+            <>
+              <p className="font-semibold text-xs text-white mt-8 border-b pb-2 mx-[14%]">ADMIN</p>
+              <ul className="text-white flex flex-col gap-y-8 ml-14 w-fit my-10">
+                {li(Map, 'MANAGE TOURS', '/me/managetours')}
+                {li(Users, 'MANAGE USERS', '/me/manageusers')}
+                {li(Star, 'MANAGE REVIEWS', '/me/managereviews')}
+                {li(Briefcase, 'MANAGE BOOKINGS', '/me/managebookings')}
+              </ul>
+            </>
+          )}
         </div>
         <div
           onClick={() => setOpen(false)}
