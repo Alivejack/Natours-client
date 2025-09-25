@@ -81,8 +81,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update User
+  const updateUser = async (data) => {
+    try {
+      const res = await axios.patch('http://127.0.0.1:3000/api/v1/users/updateMe', data, {
+        withCredentials: true,
+      });
+
+      notify('success', 'user updated successfully');
+      setUser(res.data.data.user);
+    } catch (err) {
+      console.log(err.response.data.message);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, error, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, error, loading, login, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
