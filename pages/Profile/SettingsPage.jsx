@@ -1,3 +1,9 @@
+import ChangeAccountSetting from '../../components/ChangeAccountSetting';
+
 export default function SettingsPage() {
-  return <div>SettingsPage</div>;
+  return (
+    <>
+      <ChangeAccountSetting />
+    </>
+  );
 }
