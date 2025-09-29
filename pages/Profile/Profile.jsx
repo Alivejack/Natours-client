@@ -8,10 +8,9 @@ export default function Profile() {
       <PcSideBar />
 
       {/* ---- PAGE ---- */}
-      <div className={`h-screen w-full shrink bg-gray-100`}>
+      <div className={`min-h-screen w-full shrink bg-gray-100`}>
         <Outlet />
       </div>
     </section>
   );
 }
-// testing git

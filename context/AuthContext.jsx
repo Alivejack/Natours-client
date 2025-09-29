@@ -74,7 +74,6 @@ export const AuthProvider = ({ children }) => {
       window.location.replace('/');
     } catch (err) {
       console.error('Logout request failed:', err.response.data.message);
-      notify('error', 'failed to logout!');
     } finally {
       setUser(null);
       setLoading(false);
@@ -95,8 +94,26 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Update User Password
+  const updatePassword = async (data) => {
+    try {
+      const res = await axios.patch('http://127.0.0.1:3000/api/v1/users/updateMyPassword', data, {
+        withCredentials: true,
+      });
+
+      notify('success', 'password updated successfully');
+      setUser(res.data.data.user);
+      setError(null);
+    } catch (err) {
+      notify('error', 'something went wrong!');
+      setError(err.response.data.message);
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, error, loading, login, logout, updateUser }}>
+    <AuthContext.Provider
+      value={{ user, error, loading, login, logout, updateUser, updatePassword }}
+    >
       {children}
     </AuthContext.Provider>
   );

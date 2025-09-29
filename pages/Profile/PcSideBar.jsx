@@ -20,7 +20,7 @@ export default function SideBar() {
   const { user } = useAuth();
 
   return (
-    <div className="hidden shrink-0 md:block h-screen md:w-1/3 max-w-[24rem] bg-gradient-to-br from-green-400 via-green-400 to-green-500 pl-14">
+    <div className="hidden shrink-0 md:block min-h-screen md:w-1/3 max-w-[24rem] bg-gradient-to-br from-green-400 via-green-400 to-green-500 pl-14">
       <ul className="flex flex-col gap-y-8 my-10">
         {li(Settings, 'SETTING', '/me/settings')}
         {li(Briefcase, 'MY BOOKINGS', '/me/bookings')}
