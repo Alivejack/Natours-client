@@ -32,7 +32,7 @@ export default function ChangePassword() {
 
       <label> Current password</label>
       <input
-        type="text"
+        type="password"
         placeholder="••••••••"
         className={`w-[80%] px-3 py-2 mt-2 mb-6 border rounded-lg focus:outline-none focus:ring-2 bg-gray-200
             ${
@@ -48,7 +48,7 @@ export default function ChangePassword() {
 
       <label className="block text-gray-800 mt-5">New password</label>
       <input
-        type="text"
+        type="password"
         placeholder="••••••••"
         className={`w-[80%] px-3 py-2 mt-2 mb-6 border rounded-lg focus:outline-none focus:ring-2 bg-gray-200
             ${

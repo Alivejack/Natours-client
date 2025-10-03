@@ -4,8 +4,9 @@ import { useAuth } from '../context/AuthContext';
 export default function ChangeAccountSetting() {
   const { user, updateUser } = useAuth();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(user?.name || '');
+  const [email, setEmail] = useState(user?.email || '');
+  const [photo, setPhoto] = useState(null);
 
   // Email validation regex
   const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
@@ -14,9 +15,10 @@ export default function ChangeAccountSetting() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const data = {};
-    if (name.trim()) data.name = name;
-    if (email.trim()) data.email = email;
+    const data = new FormData();
+    if (name.trim()) data.append('name', name);
+    if (email.trim()) data.append('email', email);
+    if (photo) data.append('photo', photo);
 
     updateUser(data);
   };
@@ -32,6 +34,7 @@ export default function ChangeAccountSetting() {
         <label className="block text-gray-800">Name</label>
         <input
           type="text"
+          name="name"
           onChange={(e) => setName(e.target.value)}
           value={name}
           className="w-[80%] px-3 py-2 mb-4 border rounded-lg focus:outline-none focus:ring-2 mt-2 border-gray-300 focus:ring-green-400 bg-gray-200"
@@ -41,6 +44,7 @@ export default function ChangeAccountSetting() {
         <label className="block text-gray-800 mt-7 ">Email address</label>
         <input
           type="email"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="you@example.com"
@@ -60,9 +64,14 @@ export default function ChangeAccountSetting() {
             className="w-20 h-20 rounded-full object-cover mt-5"
             alt="ProfilePic"
           />
-          <a className=" text-green-500 border-b-2" href="#">
-            Choose new photo
-          </a>
+
+          <input
+            type="file"
+            accept="image/*"
+            name="photo"
+            onChange={(e) => setPhoto(e.target.files[0])}
+            className=" text-green-500 hover:bg-green-200 py-2 px-2 w-1/2 rounded-2xl hover:cursor-pointer hover:scale-105 transform transition duration-300"
+          />
         </div>
 
         <button
