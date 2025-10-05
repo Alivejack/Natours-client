@@ -28,7 +28,7 @@ export default function ChangePassword() {
       className="mt-20 flex flex-col w-full md:w-[60%] max-w-[45%] mx-auto items-center md:items-start pb-20"
       onSubmit={handleSubmit}
     >
-      <h2 className=" text-green-500 text-2xl font-semibold mb-6">PASSWORD CHANGE</h2>
+      <h2 className=" text-green-500 text-2xl font-semibold mb-6 text-center">PASSWORD CHANGE</h2>
 
       <label> Current password</label>
       <input

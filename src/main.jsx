@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { AuthProvider } from '../context/AuthContext';
 import AdminRoute from '../components/AdminRoute';
 import './index.css';
+
 import Home from '../pages/Home/Home';
 import NotFound from '../pages/NotFound';
 import TourPage from '../pages/TourPage';
@@ -42,9 +43,9 @@ const router = createBrowserRouter([
           <CheckLogin>
             <Profile />
           </CheckLogin>
-        ), // parent layout
+        ),
         children: [
-          { index: true, path: 'settings', element: <SettingsPage /> }, // default page
+          { index: true, path: 'settings', element: <SettingsPage /> },
           { path: 'bookings', element: <BookingsPage /> },
           { path: 'reviews', element: <ReviewsPage /> },
           { path: 'billing', element: <BillingPage /> },

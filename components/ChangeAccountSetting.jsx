@@ -29,7 +29,9 @@ export default function ChangeAccountSetting() {
         className="mt-20 flex flex-col w-full md:w-[60%] max-w-[45%] mx-auto items-center md:items-start"
         onSubmit={handleSubmit}
       >
-        <h2 className=" text-green-500 text-2xl font-semibold mb-6">YOUR ACCOUNT SETTINGS</h2>
+        <h2 className=" text-green-500 text-2xl font-semibold mb-6 text-center">
+          YOUR ACCOUNT SETTINGS
+        </h2>
 
         <label className="block text-gray-800">Name</label>
         <input

@@ -14,7 +14,8 @@ export const AuthProvider = ({ children }) => {
     const fetchUser = async () => {
       try {
         setLoading(true);
-        const res = await axios.get('http://127.0.0.1:3000/api/v1/users/me', {
+
+        const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/me`, {
           withCredentials: true,
         });
 
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.post(
-        'http://127.0.0.1:3000/api/v1/users/login',
+        `${import.meta.env.VITE_API_URL}/users/login`,
         { email, password },
         {
           withCredentials: true,
@@ -64,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       await axios.post(
-        'http://127.0.0.1:3000/api/v1/users/logout',
+        `${import.meta.env.VITE_API_URL}/users/logout`,
         {},
         {
           withCredentials: true,
@@ -83,7 +84,7 @@ export const AuthProvider = ({ children }) => {
   // Update User
   const updateUser = async (data) => {
     try {
-      const res = await axios.patch('http://127.0.0.1:3000/api/v1/users/updateMe', data, {
+      const res = await axios.patch(`${import.meta.env.VITE_API_URL}/users/updateMe`, data, {
         withCredentials: true,
       });
 
@@ -97,9 +98,13 @@ export const AuthProvider = ({ children }) => {
   // Update User Password
   const updatePassword = async (data) => {
     try {
-      const res = await axios.patch('http://127.0.0.1:3000/api/v1/users/updateMyPassword', data, {
-        withCredentials: true,
-      });
+      const res = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/users/updateMyPassword`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
 
       notify('success', 'password updated successfully');
       setUser(res.data.data.user);
