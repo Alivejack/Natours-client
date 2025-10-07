@@ -92,9 +92,12 @@ const NavBar = () => {
               >
                 LOG IN
               </Link>
-              <button className=" text-white hover:bg-white hover:text-black hover:cursor-pointer hover:shadow transform transition sm:border border-white rounded-full sm:py-2 sm:px-4">
+              <Link
+                className=" text-white hover:bg-white hover:text-black hover:cursor-pointer hover:shadow transform transition sm:border border-white rounded-full sm:py-2 sm:px-4"
+                to={'/signup'}
+              >
                 SIGN UP
-              </button>
+              </Link>
             </>
           )}
         </div>

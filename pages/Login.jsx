@@ -24,18 +24,13 @@ export default function Login() {
 
   return (
     <section className="w-[96%] mx-auto h-screen bg-neutral-100 flex items-center justify-center overflow-hidden">
-      <form
-        onSubmit={handleSubmit}
-        className=" bg-white p-8 rounded-xl shadow-lg w-96 mb-48"
-      >
+      <form onSubmit={handleSubmit} className=" bg-white p-8 rounded-xl shadow-lg w-96 mb-[15%]">
         <h2 className="text-center text-green-500 text-lg font-semibold mb-6">
           LOG INTO YOUR ACCOUNT
         </h2>
 
         {/* Email */}
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Email address
-        </label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
         <input
           type="email"
           value={email}

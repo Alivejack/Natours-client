@@ -81,6 +81,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const signup = async (data) => {
+    setLoading(true);
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/signup`, data, {
+        withCredentials: true,
+      });
+
+      notify('success', 'your account has been created successfully!');
+      setUser(res.data.data.user);
+      setError(null);
+      setTimeout(() => {
+        window.location.replace('/');
+      }, 3000);
+    } catch (err) {
+      setError(err.response.data.message);
+      notify('error', 'failed to create your account!');
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Update User
   const updateUser = async (data) => {
     try {
@@ -117,7 +139,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, error, loading, login, logout, updateUser, updatePassword }}
+      value={{ user, error, loading, login, logout, signup, updateUser, updatePassword }}
     >
       {children}
     </AuthContext.Provider>

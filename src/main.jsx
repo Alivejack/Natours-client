@@ -9,6 +9,7 @@ import NotFound from '../pages/NotFound';
 import TourPage from '../pages/TourPage';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
+import Singup from '../pages/Singup';
 import Profile from '../pages/Profile/Profile';
 import SettingsPage from '../pages/Profile/SettingsPage';
 import BookingsPage from '../pages/Profile/BookingsPage';
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
+      },
+      {
+        path: 'signup',
+        element: <Singup />,
       },
       {
         path: 'me',
