@@ -20,14 +20,13 @@ const NavBar = () => {
     }
   }, [open]);
 
+  const navLinkClass = ({ isActive }) => {
+    return isActive ? 'text-white font-bold border-l-4 pl-2 border-white' : 'text-white';
+  };
+
   const li = (Icon, text, url) => {
     return (
-      <NavLink
-        to={url}
-        className={({ isActive }) =>
-          isActive ? 'text-white font-bold border-l-4 pl-2 border-white' : 'text-white'
-        }
-      >
+      <NavLink to={url} className={navLinkClass}>
         <li className="flex items-center gap-x-3 hover:scale-105 hover:cursor-pointer transition-transform duration-200">
           <Icon size={23} /> {text}
         </li>
@@ -102,10 +101,14 @@ const NavBar = () => {
       </nav>
 
       {/* SIDE BAR */}
-      <div className={`w-full absolute z-10 flex md:hidden`}>
+      <div
+        className={`${
+          open ? 'w-full absolute z-10 flex' : 'absolute z-0 w-0 overflow-hidden'
+        } md:hidden`}
+      >
         <div
           className={`xs:w-1/2 w-full h-screen bg-gradient-to-b from-green-400 via-green-500 to-green-700 transition-all duration-300 ${
-            open ? 'translate-0' : '-translate-x-full'
+            open ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <ul className=" text-white flex flex-col gap-y-8 ml-14 w-fit my-10">

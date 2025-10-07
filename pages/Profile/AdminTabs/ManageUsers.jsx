@@ -183,7 +183,9 @@ export default function ManageUsers() {
 
   return (
     <div className="flex flex-col items-center p-6 min-h-screen bg-gray-50">
-      <h1 className="text-3xl font-extrabold text-gray-800 mb-8">User Management Panel</h1>
+      <h1 className="text-3xl font-extrabold text-gray-800 mb-8 text-center">
+        User Management Panel
+      </h1>
 
       <button
         className=" bg-indigo-600 text-white px-6 py-3 mb-10 rounded-full font-bold uppercase tracking-wider shadow-lg hover:bg-indigo-700 transition-all duration-300 hover:scale-[1.05] hover:cursor-pointer"
