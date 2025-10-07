@@ -5,6 +5,89 @@ import { notify } from '../../../utils/notify';
 const ROLE_ORDER = ['admin', 'lead-guide', 'guide', 'user'];
 const AVAILABLE_ROLES = ['admin', 'lead-guide', 'guide', 'user']; // List of roles for the select dropdown
 
+const UserDisplayCard = ({ user, getRoleColor, handleEditClick }) => (
+  <div
+    key={user.id}
+    className={`${getRoleColor(
+      user.role
+    )} rounded-xl p-4 flex flex-col gap-1 shadow-lg transition-all duration-300 hover:scale-[1.02] w-72 md:w-80`}
+  >
+    <span className="relative font-bold text-xl mb-1">
+      {user.name}
+      <span className="group ml-2 inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-white/30 capitalize">
+        {user.role}
+        <span className="hidden group-hover:opacity-100 group-hover:inline-block absolute opacity-0 -top-3 left-0 w-4 h-4 transition-opacity duration-200 rounded-full">
+          {user.id}
+        </span>
+      </span>
+    </span>
+    <span className="text-sm">Email: {user.email}</span>
+    <div className="flex justify-end mt-3">
+      <button
+        onClick={() => handleEditClick(user)}
+        className=" bg-white text-gray-800 py-1 px-4 rounded-full hover:bg-gray-100 text-sm font-semibold transition-colors duration-200 shadow hover:cursor-pointer"
+      >
+        Edit Info
+      </button>
+    </div>
+  </div>
+);
+
+const UserEditForm = ({ userId, formData, handleFormChange, handleUpdateUser, handleCancel }) => (
+  <div
+    className={` bg-white text-gray-800 border-2 border-indigo-500 rounded-xl p-4 flex flex-col gap-3 shadow-2xl w-72 md:w-80`}
+  >
+    <h3 className="font-bold text-lg text-indigo-700">Editing User</h3>
+
+    <label className="text-sm font-medium">Name</label>
+    <input
+      type="text"
+      name="name"
+      value={formData.name || ''}
+      onChange={handleFormChange}
+      className="border border-gray-300 p-2 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
+    />
+
+    <label className="text-sm font-medium">Email</label>
+    <input
+      type="email"
+      name="email"
+      value={formData.email || ''}
+      onChange={handleFormChange}
+      className="border border-gray-300 p-2 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
+    />
+
+    <label className="text-sm font-medium">Role</label>
+    <select
+      name="role"
+      value={formData.role || ''}
+      onChange={handleFormChange}
+      className="border border-gray-300 p-2 rounded-lg bg-white appearance-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
+    >
+      {AVAILABLE_ROLES.map((role) => (
+        <option key={role} value={role} className="capitalize">
+          {role}
+        </option>
+      ))}
+    </select>
+
+    <div className="flex justify-between mt-4 gap-2">
+      <button
+        onClick={handleCancel}
+        className="flex-1 bg-gray-400 text-white py-2 rounded-full hover:bg-gray-500 transition-colors duration-200 font-semibold"
+      >
+        Cancel
+      </button>
+      <button
+        onClick={() => handleUpdateUser(userId)}
+        className="flex-1 bg-indigo-500 text-white py-2 rounded-full hover:bg-indigo-600 transition-colors duration-200 font-semibold"
+      >
+        Save Changes
+      </button>
+    </div>
+  </div>
+);
+
 export default function ManageUsers() {
   const [users, setUsers] = useState(null);
   // State to track which user's ID is currently being edited
@@ -98,89 +181,6 @@ export default function ManageUsers() {
     setFormData({});
   };
 
-  const UserDisplayCard = ({ user }) => (
-    <div
-      key={user.id}
-      className={`${getRoleColor(
-        user.role
-      )} rounded-xl p-4 flex flex-col gap-1 shadow-lg transition-all duration-300 hover:scale-[1.02] w-72 md:w-80`}
-    >
-      <span className="relative font-bold text-xl mb-1">
-        {user.name}
-        <span className="group ml-2 inline-block text-xs font-semibold px-2 py-0.5 rounded-full bg-white/30 capitalize">
-          {user.role}
-          <span className="hidden group-hover:opacity-100 group-hover:inline-block absolute opacity-0 -top-3 left-0 w-4 h-4 transition-opacity duration-200 rounded-full">
-            {user.id}
-          </span>
-        </span>
-      </span>
-      <span className="text-sm">Email: {user.email}</span>
-      <div className="flex justify-end mt-3">
-        <button
-          onClick={() => handleEditClick(user)}
-          className=" bg-white text-gray-800 py-1 px-4 rounded-full hover:bg-gray-100 text-sm font-semibold transition-colors duration-200 shadow hover:cursor-pointer"
-        >
-          Edit Info
-        </button>
-      </div>
-    </div>
-  );
-
-  const UserEditForm = ({ userId }) => (
-    <div
-      className={` bg-white text-gray-800 border-2 border-indigo-500 rounded-xl p-4 flex flex-col gap-3 shadow-2xl w-72 md:w-80`}
-    >
-      <h3 className="font-bold text-lg text-indigo-700">Editing User</h3>
-
-      <label className="text-sm font-medium">Name</label>
-      <input
-        type="text"
-        name="name"
-        value={formData.name || ''}
-        onChange={handleFormChange}
-        className="border border-gray-300 p-2 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
-      />
-
-      <label className="text-sm font-medium">Email</label>
-      <input
-        type="email"
-        name="email"
-        value={formData.email || ''}
-        onChange={handleFormChange}
-        className="border border-gray-300 p-2 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
-      />
-
-      <label className="text-sm font-medium">Role</label>
-      <select
-        name="role"
-        value={formData.role || ''}
-        onChange={handleFormChange}
-        className="border border-gray-300 p-2 rounded-lg bg-white appearance-none focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 outline-none transition-shadow"
-      >
-        {AVAILABLE_ROLES.map((role) => (
-          <option key={role} value={role} className="capitalize">
-            {role}
-          </option>
-        ))}
-      </select>
-
-      <div className="flex justify-between mt-4 gap-2">
-        <button
-          onClick={handleCancel}
-          className="flex-1 bg-gray-400 text-white py-2 rounded-full hover:bg-gray-500 transition-colors duration-200 font-semibold"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => handleUpdateUser(userId)}
-          className="flex-1 bg-indigo-500 text-white py-2 rounded-full hover:bg-indigo-600 transition-colors duration-200 font-semibold"
-        >
-          Save Changes
-        </button>
-      </div>
-    </div>
-  );
-
   return (
     <div className="flex flex-col items-center p-6 min-h-screen bg-gray-50">
       <h1 className="text-3xl font-extrabold text-gray-800 mb-8">User Management Panel</h1>
@@ -196,9 +196,21 @@ export default function ManageUsers() {
         <div className="flex flex-wrap justify-center gap-4 max-w-4xl">
           {sortedUsers.map((user) =>
             user.id === editingUserId ? (
-              <UserEditForm key={user.id} userId={user.id} />
+              <UserEditForm
+                key={user.id}
+                userId={user.id}
+                formData={formData}
+                handleFormChange={handleFormChange}
+                handleUpdateUser={handleUpdateUser}
+                handleCancel={handleCancel}
+              />
             ) : (
-              <UserDisplayCard key={user.id} user={user} />
+              <UserDisplayCard
+                key={user.id}
+                user={user}
+                handleEditClick={handleEditClick}
+                getRoleColor={getRoleColor}
+              />
             )
           )}
         </div>
