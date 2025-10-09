@@ -12,6 +12,7 @@ export default function ManageUsers() {
   const [editingUserId, setEditingUserId] = useState(null);
   const [formData, setFormData] = useState({});
   const [search, setSearch] = useState('');
+  const [role, setRole] = useState('');
 
   const getAllUsers = async () => {
     try {
@@ -41,11 +42,28 @@ export default function ManageUsers() {
   };
 
   const handleSearch = async () => {
-    if (!search) return;
+    if (!search && !role) return;
+
     try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/search?name=${search}`, {
-        withCredentials: true,
-      });
+      const params = new URLSearchParams();
+      console.log(`1 ${params}`);
+
+      if (search) {
+        params.append('name', search);
+        console.log(`2 ${params}`);
+      }
+      if (role) {
+        params.append('role', role);
+        console.log(`3 ${params}`);
+      }
+      console.log(`4 ${params}`);
+
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/search?${params.toString()}`,
+        {
+          withCredentials: true,
+        }
+      );
 
       setUsers(res.data.users.map((user) => ({ ...user, id: user._id })));
       notify('success', `Successfully loaded ${res.data.result} users.`);
@@ -123,6 +141,19 @@ export default function ManageUsers() {
       </h1>
 
       <div className="flex gap-4 mb-4 w-1/2">
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+          className="p-2 rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 focus:shadow-xl outline-none"
+        >
+          <option value="">All Roles</option>
+          {ROLE_ORDER.map((role) => (
+            <option key={role} value={role} className="capitalize">
+              {role}
+            </option>
+          ))}
+        </select>
+
         <input
           type="text"
           placeholder="Search users..."
