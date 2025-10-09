@@ -93,7 +93,7 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       setTimeout(() => {
         window.location.replace('/');
-      }, 3000);
+      }, 1000);
     } catch (err) {
       setError(err.response.data.message);
       notify('error', 'failed to create your account!');
