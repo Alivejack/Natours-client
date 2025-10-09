@@ -11,6 +11,7 @@ export default function ManageUsers() {
   const [users, setUsers] = useState(null);
   const [editingUserId, setEditingUserId] = useState(null);
   const [formData, setFormData] = useState({});
+  const [search, setSearch] = useState('');
 
   const getAllUsers = async () => {
     try {
@@ -36,6 +37,22 @@ export default function ManageUsers() {
     } catch (err) {
       console.error('Error deleting user:', err.response?.data?.message || err.message);
       notify('error', err.response?.data?.message || 'Failed to delete user.');
+    }
+  };
+
+  const handleSearch = async () => {
+    if (!search) return;
+    try {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/search?name=${search}`, {
+        withCredentials: true,
+      });
+
+      setUsers(res.data.users.map((user) => ({ ...user, id: user._id })));
+      notify('success', `Successfully loaded ${res.data.result} users.`);
+    } catch (err) {
+      notify('error', err.response?.data?.message || "Couldn't get the data from server!");
+    } finally {
+      setSearch('');
     }
   };
 
@@ -104,6 +121,24 @@ export default function ManageUsers() {
       <h1 className="text-3xl font-extrabold text-gray-800 mb-8 text-center">
         User Management Panel
       </h1>
+
+      <div className="flex gap-4 mb-4 w-1/2">
+        <input
+          type="text"
+          placeholder="Search users..."
+          className="p-2 w-full rounded-md border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 focus:border-2 focus:shadow-xl outline-none"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        />
+
+        <button
+          className=" bg-indigo-600 text-white px-6 py-3 rounded-full font-bold uppercase tracking-wider shadow-lg hover:bg-indigo-700 transition-all duration-300 hover:scale-[1.05] hover:cursor-pointer"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
 
       <button
         className=" bg-indigo-600 text-white px-6 py-3 mb-10 rounded-full font-bold uppercase tracking-wider shadow-lg hover:bg-indigo-700 transition-all duration-300 hover:scale-[1.05] hover:cursor-pointer"
